@@ -1,0 +1,11 @@
+name: databricks_azure_pulumi_py
+description: Azure RG + Databricks Workspace + Instance Pool + Autoscaling Cluster
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: azure-python
