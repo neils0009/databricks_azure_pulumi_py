@@ -21,19 +21,8 @@ rg = resources.ResourceGroup(
     location="Australia Southeast",
 )
 
-# ---------------------------
-# Azure: Managed Resource Group for the Databricks workspace
-# Azure requires a separate MRG that the service controls.
-# Name it deterministically to avoid collisions.
-# ---------------------------
-#mrg = resources.ResourceGroup(
-#    "managedrg",
-#    resource_group_name="databricksRG-mrg",
-#    location=rg.location,
-#)
-
-# Choose a unique MRG name; don't pre-create it.
-mrg_name = "databricksRG-pulumi-azureCRDB-mrg"  # change if you want
+# Choose a unique MRG name
+mrg_name = "databricksRG-pulumi-azureCRDB-mrg"
 mrg_id = f"/subscriptions/{azure_subscription_id}/resourceGroups/{mrg_name}"
 
 # ---------------------------
@@ -47,11 +36,6 @@ workspace = azdb.Workspace(
     location=rg.location,
     sku={"name": "standard"},
     managed_resource_group_id=mrg_id,
-    # You can add optional properties if needed in your org:
-    # parameters={
-    #     "prepareEncryption": {"value": False},
-    #     "enableNoPublicIp": {"value": False},
-    # }
     opts=ResourceOptions(depends_on=[rg]),
 )
 
